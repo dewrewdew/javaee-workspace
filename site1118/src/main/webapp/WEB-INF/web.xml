@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>site1118</display-name>
+
+	<!--ctrl+shift+/ 주석 단축키  -->
+	<!-- 웹브라우저로 클래스명을 직접 접근할 수 없으므로, 가상의 url주소로 매핑하여 우리의 서블릿을 실행해볼 수 있다.-->
+	<!-- http://localhost:7979/main-->
+	<!-- 이걸 서블릿 매핑이라 함. -->
+	<servlet>
+		<servlet-name>controller</servlet-name>
+		<servlet-class>controller.MyServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>controller</servlet-name>
+		<url-pattern>/main</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>list</servlet-name>
+		<servlet-class>com.ch.site1118.controller.ListController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>list</servlet-name>
+		<url-pattern>/table</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>registServlet</servlet-name>
+		<servlet-class>com.ch.site1118.controller.RegistController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>registServlet</servlet-name>
+		<url-pattern>/member/regist</url-pattern>
+	</servlet-mapping>
+		
+</web-app>

@@ -9,6 +9,10 @@ JavaEE 기반으로 웹 어플리케이션에서 실행될 수 있는 특수한 
     -lib : .jar들 보관
 */
 
-class MyServlet{
+// 아래의 클래스가 javaee 서버에서 실행되려면 반드시 서블릿 클래스를 상속받아야 한다.
+// java.lang.* => import하지 않아도 쓸 수 있는것들은 이 패키지에 포함되어있음!
+import javax.servlet.http.HttpServlet;
+
+class MyServlet extends HttpServlet{
     String name = "puppy";
 }
