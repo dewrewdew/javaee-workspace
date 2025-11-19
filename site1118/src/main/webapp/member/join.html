@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+input[type=text], input[type=password]{
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+
+input[type=button] {
+  background-color: #04AA6D;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=button]:hover {
+  background-color: #45a049;
+}
+
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+</style>
+<script>
+// HTML 태그 요소에 지금까지 작성해왔던 이벤트 핸들러를 js 프로그래밍 언어로 작성해보자
+function send(){
+	let form1 = document.getElementById("form1");
+	form1.method = "post";
+	form1.action = "/member/join";
+	form1.submit();
+}
+
+function init(){
+	let bt_send = document.getElementById("bt_send");
+	bt_send.addEventListener("click", function(){
+	send();
+	alert("눌렀어?");
+	});
+}
+	// 이제부터는 onLoad, onClick이런거 쓰지말고 개발자답게 구현을 해보자!!
+	// <button onClick=""> 원래 이렇게 할 수 있는 코드를 js로 구현해본다.
+	// 그리고 디자인에 기능을 구현하면 디자인이 망가지면 기능까지 망가짐
+	// 따라서 이렇게 구현하는게 맞음
+
+
+//원래 아래의 코드를 html에 직접 구현하면 아래와 같다.
+// <body onLoad="function(){}">
+window.addEventListener("load", function(){
+	alert("문서를 로드했어");
+	init();
+});
+/*bt_send는 자바스크립트보다도 밑에 위치하므로 아직 읽혀지지않아서 일단 함수로 실행을 막아놓고 원하는 시점에 이 함수를 호출하면 시간차에의한 에러 방지*/
+/*function으로 감싸지 않으면 변수 생성은 저 아래에 되어있기 떄문에 function으로 감싸기! 
+function은 실행해야 진행되니까! */
+ 
+</script>
+</head>
+<body>
+
+<h3>Contact Form</h3>
+
+<div class="container">
+  <form id = "form1">
+    <input type="text"  			name="ID" 		placeholder="Your id..">
+    <input type="password" 	name="PWD" 	placeholder="Your password..">
+    <input type="text"	 		name="name" 	placeholder="Your name..">
+	
+	<!-- type 이 sub일 경우 form태그로 감싼 모든 내용을 무조건 전송해버림
+	따라서 일반 버튼으로 전환하면 전송 능력이 사라짐 -->
+    <input type="button" value="Submit" id="bt_send">
+  </form>
+</div>
+
+</body>
+</html>

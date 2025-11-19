@@ -34,5 +34,14 @@
 		<servlet-name>registServlet</servlet-name>
 		<url-pattern>/member/regist</url-pattern>
 	</servlet-mapping>
-		
+	
+	<servlet>
+		<servlet-name>joinServlet</servlet-name>
+		<servlet-class>com.ch.site1118.controller.JoinController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>joinServlet</servlet-name>
+		<url-pattern>/member/join</url-pattern>
+	</servlet-mapping>
+	
 </web-app>
