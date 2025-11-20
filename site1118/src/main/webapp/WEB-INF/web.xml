@@ -44,4 +44,13 @@
 		<url-pattern>/member/join</url-pattern>
 	</servlet-mapping>
 	
+		<servlet>
+		<servlet-name>listServlet</servlet-name>
+		<servlet-class>com.ch.site1118.controller.MemberList</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>listServlet</servlet-name>
+		<url-pattern>/member/list</url-pattern>
+	</servlet-mapping>
+	
 </web-app>

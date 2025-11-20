@@ -77,9 +77,15 @@ function은 실행해야 진행되니까! */
 
 <div class="container">
   <form id = "form1">
-    <input type="text"  			name="ID" 		placeholder="Your id..">
-    <input type="password" 	name="PWD" 	placeholder="Your password..">
+  	<!-- HTML ID, Name의 공통점 및 차이점
+  	1) 공통점 : 둘 다 문서내의 요소들 간 구분을 위한 것임 단, id는 중복을 허용하지 않음. 따라서 문서 내에서 id는 반드시 유일해야 함.
+  	2) 차이점 : name은 중복을 허용하며 만일 중복될 경우 DOM화 되어질 때 js의 배열로 생성됨
+  	, 또한 name은 폼양식을 서버로 전송할 때 전송 파라미터(전송 시 변수로 사용되는것) 역할을 수행함
+  	 -->
+    <input type="text"  			name="id" 		placeholder="Your id..">
+    <input type="password" 	name="pwd" 	placeholder="Your password..">
     <input type="text"	 		name="name" 	placeholder="Your name..">
+    <input type="text"	 		name="email" 	placeholder="Your mail..">
 	
 	<!-- type 이 sub일 경우 form태그로 감싼 모든 내용을 무조건 전송해버림
 	따라서 일반 버튼으로 전환하면 전송 능력이 사라짐 -->
