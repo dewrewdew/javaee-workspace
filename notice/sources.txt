@@ -1,1 +1,3 @@
+C:\javaee_workspace\notice\src\main\java\com\ch\notice\notice\DeleteServlet.java
+C:\javaee_workspace\notice\src\main\java\com\ch\notice\notice\EditServlet.java
 C:\javaee_workspace\notice\src\main\java\com\ch\notice\notice\RegistServlet.java

@@ -1,4 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%
+	// 위의 페이지 영역은 현재 jsp가 Tomcat에 의해 서블릿으로 코딩 되어 질때
+	// response.setContextType("text/html");
+	// charset=UTF-8 response.setCharacterEncoding("utf-8");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,13 +50,13 @@ input[type=button]:hover {
 </style>
 <script>
 
-//사용자가 입력한 폼의 내용을 서버로 전송하자
-//JavaScript 언어는 DB에 직접적으로 통신 가능? 불가
-//JS는 클라이언트, 즉 프론트영역 언어이므로 원본 소스가 그냥 노출되어버림. 아래와 같이 쓰면 큰일남!!
-//function regist(){
-	// let url="jdbc:mysql://localhost:3306/java";
-	// let user="servlet";
-	// let password="1234";
+	//사용자가 입력한 폼의 내용을 서버로 전송하자
+	//JavaScript 언어는 DB에 직접적으로 통신 가능? 불가
+	//JS는 클라이언트, 즉 프론트영역 언어이므로 원본 소스가 그냥 노출되어버림. 아래와 같이 쓰면 큰일남!!
+	//function regist(){
+		// let url="jdbc:mysql://localhost:3306/java";
+		// let user="servlet";
+		// let password="1234";
 //}
 function regist(){
 	// JS는 DB와의 통신 자체가 막혀있기 때문에, 직접 DB에 쿼리문을 날리는것이 아니라,
@@ -76,7 +81,8 @@ function regist(){
 			<input type="text" id="fname" name="title" placeholder="제목 입력.."> <!-- name을 주는건 파라미터를 기입하겠다는 뜻과 같음! -->
 			<input type="text" id="lname" name="writer" placeholder="작성자 입력..">
 			<textarea id="subject" name="content" placeholder="내용을 입력하세요.." style="height: 200px"></textarea>
-			<input type="button" value="Submit" onClick="regist()">
+			<!-- js에서 링크를 표현한 내장객체를 location -->
+			<input type="button" value="Submit" onClick="regist();">
 		</form>
 	</div>
 

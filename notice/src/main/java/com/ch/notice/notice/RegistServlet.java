@@ -69,7 +69,7 @@ public class RegistServlet extends HttpServlet{
 				out.println("접속 실패");
 			} else {
 				out.println("접속 성공");
-				// 접속 성공했으므로 쿼리 실행 가능! DML(insert, update, delete, select)
+				// 접속 성공했으므로 쿼리 실행 가능! DML(insert, update, delete) => select는 dml로 안치나?ㅁ?
 				String sql="insert into notice(title, writer, content) values(?,?,?)";
 				pstmt=con.prepareStatement(sql); //pstmt 인스턴스 얻기
 				
@@ -80,14 +80,13 @@ public class RegistServlet extends HttpServlet{
 				
 				// insert 실행(DML일 경우 executeUpdate() 호출, 반환값은? 쿼리에 의해 영향을 받은 레코드 수! insert는 무조건 1건씩 반영되니까 반환값 무조건 1)
 				int result=pstmt.executeUpdate();
-				if(result<1) {
+				if(result==0) {
 					out.println("등록 실패");
 				} else {
 					out.println("등록 성공");
 					
 					// 브라우저로 하여금 지정한 url로 다시 재접속 하도록 명령
-					response.sendRedirect("/notice/list.jsp"
-							+ ""); // 웹브라우저는 <script>location.href=url</script>
+					response.sendRedirect("/notice/list.jsp"); // 웹브라우저는 <script>location.href=url</script>
 				}
 				
 			}
