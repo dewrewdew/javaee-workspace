@@ -23,8 +23,7 @@ public class RegistServlet extends HttpServlet{
 		response.setContentType("text/html; charset=UTF-8"); // 문서 자체 문자 인코딩 처리
 		request.setCharacterEncoding("utf-8");
 		
-		
-		String url = "jdbc:mysql://localhost:3306/java";
+		String url = "jdbc:mysql://172.30.1.10:3306/java";
 		String user = "servlet";
 		String password = "1234";
 		
@@ -52,7 +51,7 @@ public class RegistServlet extends HttpServlet{
 				out.print("접속 성공");
 			}
 			// 쿼리문 수행
-			String sql = "INSERT INTO MEMBER(ID, PWD, NAME) VALUES(?, ?, ?)";
+			String sql = "insert into member(id, pwd, name) values(?, ?, ?)";
 			pstmt = con.prepareStatement(sql);
 			
 			pstmt.setString(1, id);
@@ -79,14 +78,14 @@ public class RegistServlet extends HttpServlet{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally { // 자원 해제
-			if(pstmt==null) {
+			if(pstmt!=null) {
 				try {
 					pstmt.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
 			}
-			if(con==null) {
+			if(con!=null) {
 				try {
 					con.close();
 				} catch (SQLException e) {

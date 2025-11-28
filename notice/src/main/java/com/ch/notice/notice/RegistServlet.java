@@ -12,21 +12,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ch.notice.domain.Notice;
+import com.ch.notice.repository.NoticeDAO;
+
 // html로부터 글쓰기 요청을 받는 서블릿 정의
 // jsp는 사실 서블릿이므로, 현재 이 서블릿의 역할을 대신할 수도 있다.
 // 하지만, jsp 자체가 서블릿의 디자인 능력을 보완하기위해 나온 기술이므로
 // 현재 이 서블릿에서는 디자인이 필요 없기 때문에, 굳이 jsp를 사용할 필요가 없어서 안씀!
 public class RegistServlet extends HttpServlet{
-	// 오라클의 경우 jdbc:oracle:thin:@localhost:1521:XE
-	String url="jdbc:mysql://localhost:3306/java";
-	String user="servlet";
-	String password="1234";
-	
-	Connection con; 
-	// 접속을 시도하는 객체가 아니라, 접속이 성공된 이후 그 정보를 가진 객체이므로 접속을 끊을 때 이용할 수 있다.
-	// 만일 이 객체가 메모리에 올라오지 못한 경우 접속 실패로 본다!!
-	PreparedStatement pstmt; // 쿼리문을 수행하는 객체 (접속이 되어야 쿼리를 실행할 수 있기 때문에 Connection 객체로부터 생성)
-	
+
+	NoticeDAO noticeDAO=new NoticeDAO();
+	// 다른 로직은 포함되어 있지 않고, 오직 DB와 관련된 CRUD만을 담당하는 중립적 객체!
+	// 메서드 내에 선언하면 메서드 실행할 때마다 중복 생성됨.
 	
 	// 클라이언트의 요청이 Get 방식일 경우, 아래의 메서드가 동작
 	@Override
@@ -58,59 +55,26 @@ public class RegistServlet extends HttpServlet{
 		// 이제는 maven 빌드툴을 사용하자!!!
 		// Build - 실행할 수 있는 상태로 구축하는 것을 말함
 		// src/animal.Dog.java 작성 후, bin/animal.Dog.class에 대해 직접 javac -d경로 대상 클래스
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver"); // 드라이버 로드
-			out.println("드라이버 로드 성공");
-			
-			
-			// 접속
-			con=DriverManager.getConnection(url, user, password);
-			if(con==null) {
-				out.println("접속 실패");
-			} else {
-				out.println("접속 성공");
-				// 접속 성공했으므로 쿼리 실행 가능! DML(insert, update, delete) => select는 dml로 안치나?ㅁ?
-				String sql="insert into notice(title, writer, content) values(?,?,?)";
-				pstmt=con.prepareStatement(sql); //pstmt 인스턴스 얻기
-				
-				// 실행 전에 먼저 바인드 변수의 값부터 설정하자
-				pstmt.setString(1, title);
-				pstmt.setString(2, writer);
-				pstmt.setString(3, content);
-				
-				// insert 실행(DML일 경우 executeUpdate() 호출, 반환값은? 쿼리에 의해 영향을 받은 레코드 수! insert는 무조건 1건씩 반영되니까 반환값 무조건 1)
-				int result=pstmt.executeUpdate();
-				if(result==0) {
-					out.println("등록 실패");
-				} else {
-					out.println("등록 성공");
-					
-					// 브라우저로 하여금 지정한 url로 다시 재접속 하도록 명령
-					response.sendRedirect("/notice/list.jsp"); // 웹브라우저는 <script>location.href=url</script>
-				}
-				
-			}
-		} catch (ClassNotFoundException e) {
-			out.println("드라이버 로드 실패");
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			if(pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			if(con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+		Notice notice = new Notice(); // 텅 비어있는 상태 => noticeDAO가 귤 봉지 notice가 귤
+		notice.setTitle(title);
+		notice.setWriter(writer);
+		notice.setContent(content);
+		
+		// 모두 채워졌으므로 아래의 메서드로 insert 완료.
+		// 단, 반환값에 따라 성공, 실패 여부를 처리해야 한다.
+		
+		int result = noticeDAO.regist(notice);
+		
+		
+		out.print("<script>");
+		if(result <1) {
+			out.print("alert('등록 실패');");
+			out.print("history.back();");
+		} else {
+			out.print("alert('등록 성공);");
+			out.print("location.href='/notice/list.jsp';");
 		}
+		out.print("</script>");
 	}
 
 }
