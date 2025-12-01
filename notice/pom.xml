@@ -22,6 +22,7 @@
   
   <!-- javaee 분야에서는 외부 라이브러리를 가리켜 의존성(dependency)이라 함-->
   <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+  <!-- 줄바꿈 단축키 : ctrl + shift + f -->
 	<dependencies>
 		<dependency>
 	    	<groupId>mysql</groupId>

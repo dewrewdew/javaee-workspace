@@ -26,4 +26,8 @@
     <!--
     <Manager pathname="" />
     -->
+    	<ResourceLink
+    	name="jndi/mysql"
+    	global="jndi/mysql"
+    	type="javax.sql.DataSource"/>
 </Context>
