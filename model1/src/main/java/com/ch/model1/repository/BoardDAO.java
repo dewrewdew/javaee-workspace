@@ -26,7 +26,7 @@ public class BoardDAO {
 		// 이 메서드 호출 시 마다 접속을 일으키는 것이 아니라, Tomcat이 접속자가 없더라도
 		// 미리 Connection들을 확보해 놓은 커넥션풀(Connection Pool)로부터 대여해보자
 		// 또한 쿼리문 수행이 완료되더라도 얻어온 Connection은 절대로 닫지 말아야 한다.
-		Connection con = null;
+		Connection con = pool.getConnection();
 		PreparedStatement pstmt = null;
 		int result=0; // return할 예정이므로 try문 밖에 선언! 
 		
@@ -66,25 +66,9 @@ public class BoardDAO {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			// con, pstmt, rs를 대신 닫아주는 메서드 호출
 		} finally {
-			if(pstmt !=null) {
-				try {
-					pstmt.close(); // 중요한건 con! pstmt는 닫아버리면 됨!
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			// 주의!! 기존 JDBC코드는 다 사용한 커넥션을 닫았지만, 풀로부터 얻어온 커넥션을 닫으면 안됨!!!
-			if(con != null) {
-				try {
-					con.close();
-					// 애초에 lookup으로 가져왔기 때문에 동일한 close()메서드지만 이때는 pool로 돌려주는 역할을 함!
-					// 이 객체는 DataSource 구현체로부터 얻어온 Connection이기 때문에 일반적 JDBC의 닫는 close()가 아님(반납!!)
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			} 
-			
+			pool.freeConnection(con, pstmt);
 		}
 		return result;
 	}
@@ -109,8 +93,8 @@ public class BoardDAO {
 		String sql = "select board_id, title, writer, content, regdate, hit from board";
 		try {
 			pstmt=con.prepareStatement(sql);
-			rs = pstmt.executeQuery(); // select문의 반환값은 ResultSet!
-			
+			rs = pstmt.executeQuery(); 
+			// select문의 반환값은 ResultSet!
 			// rs는 무조건 이 메서드에서 닫아야 하므로(외부의 jsp는 디자인을 담당하는 코드이지, ResultSet의 존재를 알 필요도 없고,
 			// 또한 ResultSet은 db연동 기술이므로, 오직 DAO에서만 제어해야 한다.
 			// 따라서 finally에서 rs를 닫는것은 DAO의 의무다!!!!
@@ -143,25 +127,118 @@ public class BoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				if(rs!=null) {
-					rs.close();
-				}
-				if(pstmt != null) {
-					pstmt.close();
-				}
-				if(con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			// con, pstmt, rs를 대신 닫아주는 메서드 호출
+			pool.freeConnection(con, pstmt, rs);
 		}
 		return list;
 		
 	}
+	// 레코드 한 건 가져오기
+	public Board select(int board_id) {
+		// 쿼리 실행을 하기 위한 데이터베이스 접속은 현재 코드에서 시도하지 말고
+		// 서버 가동과 동시에 확보해놓은 커넥션 풀로부터 가져오자
+		Connection con = pool.getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Board board = null; // 가장 밖에 있어야 return이 가능!!!
+		try {
+			String sql="select * from board where board_id=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, board_id);
+			rs=pstmt.executeQuery(); // select문 실행!
+			// rs가 죽어도 상관없으려면 게시물 1건을 표현할 수 있는 대체제를 사용 => DTO => 세상 중요!!!
+			// DB의 레코드 1건은 java 언어에서 DTO 인스턴스 1개와 매칭이 된다!
+			if(rs.next()) { // next()가 true인 경우, 즉, 쿼리 실행에 의해 조건에 맞는 레코드가 존재할때만 DTO를 반환하자!!
+				board = new Board(); // 현재 상태는 empty
+				
+				// ResultSet이 보유하고있었던 데이터를 DTO로 옮기기
+				board.setBoard_id(rs.getInt("board_id"));
+				board.setTitle(rs.getString("title")); // 그 뭘 받아오면 무조건 문자열로 인식한다고 했던 그게 어디더라 확인해보기!! <%%> 유형들도 정리!!
+				board.setWriter(rs.getString("writer"));
+				board.setContent(rs.getString("content"));
+				board.setRegdate(rs.getString("regdate"));
+				board.setHit(rs.getInt("hit"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt, rs);
+		}
+		return board;
+	}
+	
+
+
+	// U(=update)
+	public int update(Board board) { // 호출자로 하여금 파라미터를 모아서 달라는 뜻 따로주지말고 DTO로 모아서 한번에 주기!!
+		
+		Connection con=null;
+		PreparedStatement pstmt= null;
+		int result = 0; // 쿼리 실행 결과를 반환할 지역변수 선언 => 지역변수니까 개발자가 직접 초기화 하기!
+		
+		con=pool.getConnection(); // 새로운 접속이 아니라, 이미 접속이 확보된 풀로부터 대여!
+		String sql = "update board set title=?, writer=?, content=? where board_id=?";
+		
+		try {
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, board.getTitle());
+			pstmt.setString(2, board.getWriter());
+			pstmt.setString(3, board.getContent());
+			pstmt.setInt(4, board.getBoard_id());
+			
+			result = pstmt.executeUpdate(); // DML 수행
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt);
+		}
+		return result;
+		
+		
+	}
+// D(=delete) 레코드 한 건 삭제
+	public int delete(int board_id) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		int result = 0; // 삭제 후 반환할 값
+		
+		con=pool.getConnection();
+		String sql = "delete from board where board_id=?";
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, board_id);
+			
+			result = pstmt.executeUpdate(); // 쿼리 수행
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt);
+		}
+		return result;
+		
+	
+	}
+	
+	
+	
+	
+	
 	
 }
-
-// U(=update)
-// D(=delete)
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

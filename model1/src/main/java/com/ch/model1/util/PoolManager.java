@@ -1,7 +1,8 @@
 package com.ch.model1.util;
 
-import java.security.spec.DSAGenParameterSpec;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.naming.InitialContext;
@@ -36,4 +37,48 @@ public class PoolManager {
 		
 		return con;
 	}
+	// 빌려간 커넥션을 반납하기
+	public void freeConnection(Connection con) {
+		if(con !=null) {
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		// 주의!! 기존 JDBC코드는 다 사용한 커넥션을 닫았지만, 풀로부터 얻어온 커넥션을 닫으면 안됨!!!
+		// 데이터 소스에서 얻어왔기 때문에 원래 내가 알던 그 con이 아니고 connection pool에 있는 con이 됨. 그래서 여기선 close 반환의 의미!
+		// 애초에 lookup으로 가져왔기 때문에 동일한 close()메서드지만 이때는 pool로 돌려주는 역할을 함!
+		// 이 객체는 DataSource 구현체로부터 얻어온 Connection이기 때문에 일반적 JDBC의 닫는 close()가 아님(반납!!)
+
+	}
+	}
+	// 아래의 오버로딩된 메서드는 DML 수행 후 반납할 때 사용하기
+	public void freeConnection(Connection con, PreparedStatement pstmt) {
+		try {
+			if(pstmt != null) {
+				pstmt.close();
+			}
+			if(con !=null) {
+				con.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	public void freeConnection(Connection con, PreparedStatement pstmt, ResultSet rs) {
+		try {
+			if(rs != null) {
+				rs.close();
+			}
+			if(pstmt != null) {
+				pstmt.close();
+			}
+			if(con != null) {
+				con.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 }
