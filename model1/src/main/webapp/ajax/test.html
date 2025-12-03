@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        document.write("A");
+        document.write("B");
+        document.write("C");
+        // 동기 방식 => "순서"를 지키는 실행 방식
+
+        document.write("A");
+        addEventListener("load", function(){ // 콜백방식 => 거의 다 비동기!
+            document.write("B");
+        });
+        document.write("C");
+        // 비동기 방식 => "load"는 바로 실행되지 x 
+        // 실행 결과 : ACB 
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
