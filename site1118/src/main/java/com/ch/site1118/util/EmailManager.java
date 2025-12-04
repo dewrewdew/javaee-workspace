@@ -18,6 +18,7 @@ import javax.mail.internet.MimeMessage;
 // activation-1.1.1 jar, javax.mail-1.5.5 (maven repository =>  매우 좋은 무료 사이트)
 public class EmailManager {
 	String host="smtp.gmail.com"; // 사용하고자 하는 메일 서버 주소
+	
 	String user="dewrewdew@gmail.com"; // 메일 서버의 사용자 계정
 	String password="wwcu rrfn etpj gmtl"; // 앱 비밀번호 
 	Properties props=new Properties(); // java.util.map의 자식 key-value 쌍을 갖는 데이터 형식

@@ -39,7 +39,7 @@
 	// 해결책 - 서버에서는 화면 전체를 보내지 말고, 순수하게 목록 데이터만을 전송해주면 클라이언트는 그 데이터를 js로 동적 처리
 	
 	// 게시물 목록 가져오기
-	List<Member2> list=dao.selectAll();
+	//List<Member2> list=dao.selectAll();
 	
 	
 	// Dog d = new Dog();
@@ -57,14 +57,47 @@
 	// JSON이란? 문자열 내의 데이터가 유달리 자바스크립트의 객체 리터럴 정의 기법을 따르는 경우 JSON문자열이라고 칭함.
 			
 	// 아래의 JSON 문자열은 말 그대로 문자열이므로, java는 그냥 String으로 처리한다.
-	StringBuffer data = new StringBuffer();
-	data.append("{");
-	data.append("\"name\" : \"슬\", ");
-	data.append(" \"email\":\"google\" ");
-	data.append("}");
+	//StringBuffer data = new StringBuffer();
+	//data.append("[");
 	
-	System.out.println(data.toString());
+	//for(int i = 0 ; i < list.size(); i++) {
+		//Member2 obj = list.get(i); // 배열이 아니니 list[i]로 바로 사용 불가!!
+		//data.append("{");
+		//data.append(" \"member2_id\" : "+obj.getMember2_id()+", ");
+		//data.append(" \"id\" : \"" + obj.getId() + "\", ");
+		//data.append(" \"name\":\""+obj.getName()+"\",  ");
+		//data.append(" \"email\":\""+obj.getEmail()+"\"  ");
+		//data.append("}");
+		//data.append(", "); // 얘는 조건문으로 막아야 함! 맨 마지막엔 안나와야 하니까 => 쉼표는 리스트의 총 길이 -1보다 작을때까지만 돌리기!!
+		//data.append("{");
+		//data.append("\"member2_id\" : 2 , ");
+		//data.append(" \"id\":\"cat\",  ");
+		//data.append(" \"name\":\"뽁\",  ");
+		//data.append(" \"email\":\"naver\"  ");
+		//data.append("}");
+		//if(i < list.size() -1) {
+			//data.append(", "); // 쉼표는 리스트의 총 길이 -1 보다 작을때까지만 나와야함
+		//}
+//	}
 	
-	out.print(data.toString()); // 클라이언트인 웹 브라우저에게 보내기
+	//data.append("]");
+	//System.out.println(data.toString());
+	
+	//out.print(data.toString()); // 클라이언트인 웹 브라우저에게 보내기
+	
+	// 만일 요청의 유형이 동기방식이였다면 유저는 목록 화면을 보아야 하므로, 아래와 같은 코드를 작성해야 함
+	// out.print("location.href=list.jsp;"); 브라우저로 하여금 list.jsp로 다시 들어오라고 하는 명령이므로
+	// 유저의 브라우저는 새로운 html을 화면에 렌더링 하게 되어 유저가 느끼기에는 새로고침(깜빡임)이 발생해버림
+	// 따라서 비동기 요청이 들어오면 서버는 절대로!!! 문서 또는 링크를 보내면 안되고 "순수한 데이터"만을 보내야 한다.
+	// 어떤 데이터를 보내야 하나? 응답을 받은 html은 자바스크립트 코드가 관여되기 때문에 js에서 객체를 다룰 수 있는 형태일 경우
+	// 개발자에게 많은 이점이 있다. 그렇다면 보내야 할 데이터의 유형은? xml(구) => json이 대세다!!!
+	
+	// AJAX (Asynchronous Javascript And XML)
+	// - 비동기적 자바스크립트와 xml
+	// - 자바스크립트를 이용한 비동기적 통신과 그에 사용되는 데이터인 xml
+	// - 하지만 현재는 xml보다는 json이 훨씬 많이 사용됨
+	// javascript가  서버에 요청을 전송한 후 원래는 요청이 도달할때까지 무한 대기인데
+	// 비동기방식으로 전환해서 요청 후 응답 받기 전까지도 뭐 순서 상관없이 브라우저 할거 하게 만들어두자!
+	
 	
 %>
