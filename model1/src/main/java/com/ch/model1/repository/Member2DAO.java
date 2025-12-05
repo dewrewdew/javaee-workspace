@@ -12,7 +12,7 @@ import com.ch.model1.util.PoolManager;
 
 /*이 클래스는 오직 데이터베이스 관련된 로직만 담당하는 DAO 클래스임*/
 public class Member2DAO {
-	PoolManager pool = PoolManager.getInstance();
+	PoolManager pool;
 	// 각각의 DAO마다 new로 선언할 필요가x 수영장 역할인데 각각 수영장을 굳이 갖고있을 필요가 없다.
 	// 굳이 여러개 만들 필요가 있나? 의문이 생길 때 적용할 것 => 디자인 패턴!! (여기서의 디자인은 설계 디자인을 의미)
 	// spring을 함에 있어 이정돈 알아야된다. 싱글톤 패턴
