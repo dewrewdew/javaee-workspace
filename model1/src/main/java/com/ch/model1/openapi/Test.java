@@ -49,7 +49,7 @@ public class Test{
         // 첫번째 매개변수 : 서버로부터 가져온 JSON 문자열 기입, 두번째 매개변수 : 그 결과를 받을 DTO를 대입해야 한다.
         
         // 이제 모든 데이터가 각각 자동으로 채워진 상태이며 데이터에 대한 접근은 최상위 객체로부터 점차적으로 접근하면 된다.
-        data.getResponse().getBody().getItems().getItem().get(0).getPlaceNm();
+        String placeNm = data.getResponse().getBody().getItems().getItem().get(0).getPlaceNm();
         System.out.println(placeNm);
         
         // System.out.println(sb.toString());

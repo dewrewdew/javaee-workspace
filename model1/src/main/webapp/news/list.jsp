@@ -60,6 +60,10 @@ tr:nth-child(even) {
 	  <tr>
 	    <td><%=num-- %></td>
 	    <td><a href="/news/content.jsp?news_id=<%= news.getNews_id()%>"><%=news.getTitle() %></a></td>
+	    <%if(news.getCnt()>0) {// 댓글이 존재한다면 %>
+	    	[<%=news.getCnt()%>]
+	    <%}%>
+	    
 	    <td><%=news.getWriter() %></td>
 	    <td><%=news.getRegdate() %></td>
 	    <td><%=news.getHit() %></td>

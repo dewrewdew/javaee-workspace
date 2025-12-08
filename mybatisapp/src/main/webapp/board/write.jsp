@@ -52,8 +52,7 @@ input[type=button]:hover {
 	function regist() {
 		// 적용할 속성이 다수일 경우, 한꺼번에 객체로 지정할 수 있는 .attr() 지원
 		$("form").attr({
-			action:"/news/regist", // 이 요청을 받는 java ee 기반 기술은 서블릿이 되어야 한다. 왜? 디자인이 필요 없으니까!
-											// jsp도 가능하긴 하지만 굳이 필요없음. 어차피 jsp로 작성한다고 해도 서블릿으로 고양이가 변환시켜버림
+			action:"/board/regist.jsp",
 			method:"post"
 		});
 		$("form").submit(); // 이 시점에 전송 요청이 발생!

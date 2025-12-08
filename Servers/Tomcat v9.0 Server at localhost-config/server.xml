@@ -58,19 +58,7 @@
    	 		initialSize : 최초 확보 수량
    	 		maxWait="10000" ms => 커넥션이 부족할 때 대기 시간 10초 (1000ms = 1초)
    	 --> 
-   	<Resource
- 		name ="jndi/mysql"
-   		auth="Container"
-   		type="javax.sql.DataSource"
-   		factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
-   		driverClassName="com.mysql.cj.jdbc.Driver"
-   		url="jdbc:mysql://localhost:3306/java?characterEncoding=UTF-8"
-   		username="servlet"
-   		password="1234"
-   		maxActive="50"
-   		initialSize="5"
-   		maxWait="10000"
-   		/>
+   	<Resource auth="Container" driverClassName="com.mysql.cj.jdbc.Driver" factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" initialSize="5" maxActive="50" maxWait="10000" name="jndi/mysql" password="1234" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/java?characterEncoding=UTF-8" username="servlet"/>
    		<!-- 태그와 태그 사이에 내용이 없으면 시작 태그 끝에 /넣어서 태그 1개로 끝내버려도 됨! -->
 
     
@@ -198,7 +186,7 @@
              Note: The pattern used is equivalent to using pattern="common" -->
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
 
-      <Context docBase="memberapp" path="/memberapp" reloadable="true" source="org.eclipse.jst.jee.server:memberapp"/><Context docBase="notice" path="/notice" reloadable="true" source="org.eclipse.jst.jee.server:notice"/><Context docBase="model1" path="/" reloadable="true" source="org.eclipse.jst.jee.server:model1"/></Host>
+      <Context docBase="memberapp" path="/memberapp" reloadable="true" source="org.eclipse.jst.jee.server:memberapp"/><Context docBase="notice" path="/notice" reloadable="true" source="org.eclipse.jst.jee.server:notice"/><Context docBase="model1" path="/model1" reloadable="true" source="org.eclipse.jst.jee.server:model1"/><Context docBase="mybatisapp" path="/" reloadable="true" source="org.eclipse.jst.jee.server:mybatisapp"/></Host>
     </Engine>
   </Service>
 </Server>

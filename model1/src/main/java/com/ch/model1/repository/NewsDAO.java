@@ -42,23 +42,32 @@ public class NewsDAO {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		List list = new ArrayList();
+		List<News> list = new ArrayList<>();
+		
+		con=poolManager.getConnection();
+		StringBuffer sb = new StringBuffer();
+		sb.append("select n.news_id as news_id, title, writer, regdate, hit, count(c.comment_id) as cnt"); // alias 기법도 활용 (as사용)
+		sb.append(" from news n left outer join comment c"); // 공백 한칸씩 꼭 띄워줄것!!!
+		sb.append(" on n.news_id=c.news_id");
+		sb.append(" group by news_id, title, writer, regdate, hit");
+		sb.append(" order by n.news_id desc");
+		
+		
+		System.out.println(sb.toString());
+		
 		
 		try {
-			con=poolManager.getConnection();
-			String sql = "select * from news order by news_id desc";// 내림차순
-			pstmt=con.prepareStatement(sql);
+			
+			pstmt=con.prepareStatement(sb.toString());
 			rs=pstmt.executeQuery(); // rs생성
 			while(rs.next()) {
 				News dto= new News();
 				dto.setNews_id(rs.getInt("news_id"));
 				dto.setTitle(rs.getString("title"));
-				
-				
 				dto.setWriter(rs.getString("writer"));
-				dto.setContent(rs.getString("content"));
 				dto.setRegdate(rs.getString("regdate"));
 				dto.setHit(rs.getInt("hit"));
+				dto.setCnt(rs.getInt("cnt"));
 				list.add(dto);
 			}
 		} catch (SQLException e) {
@@ -100,5 +109,5 @@ public class NewsDAO {
 		}
 			
 			return dto;
-	}		
+	}
 }
