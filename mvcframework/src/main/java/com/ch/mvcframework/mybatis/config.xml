@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+		<typeAliases>
+			<typeAlias type="com.ch.mvcframework.dto.Board" alias="Board"/>
+		</typeAliases>
+  <environments default="development">
+    <environment id="development">
+      <transactionManager type="JDBC"/>
+      <dataSource type="POOLED">
+        <property name="driver" 		value="com.mysql.cj.jdbc.Driver"/>
+        <property name="url" 			value="jdbc:mysql://localhost:3306/java"/>
+        <property name="username" 	value="servlet"/>
+        <property name="password" 	value="1234"/>
+      </dataSource>
+      
+    </environment>
+  </environments>
+  <!-- 자바 코드 대신 쿼리문을 작성해놓은 파일을 가리켜 매퍼라 하며, 매퍼의 위치는 아래의 mappers 태그의 자식 태그로 등록해야함. -->
+  <mappers>
+    <mapper resource="com/ch/mvcframework/mybatis/BoardMapper.xml"/>
+  </mappers>
+
+</configuration>

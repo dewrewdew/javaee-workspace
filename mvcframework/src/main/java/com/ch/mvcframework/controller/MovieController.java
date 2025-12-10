@@ -26,10 +26,10 @@ import com.ch.mvcframework.movie.model.MovieManager;
  * 
  * MVC 방법론을 따라 웹상에서 구현한 게 Model2라고 생각하면 됨!
  * */
-public class MovieController{
+public class MovieController implements Controller{
 	MovieManager manager = new MovieManager();
 	
-	protected void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		String movie = request.getParameter("movie");
 		// out.print(movie); => 이 클래스의 목적은 컨트롤러이므로 더이상 디자인 영역을 침해해서는 안됨.
@@ -64,4 +64,5 @@ public class MovieController{
 		// 위의 판단 결과를 여기서 출력하면 MVC위배됨 따라서 판단 결과를 별도의 디자인영역에서 보여줘야 함.
 		
 	}
+
 }

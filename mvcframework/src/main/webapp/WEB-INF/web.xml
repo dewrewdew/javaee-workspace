@@ -5,6 +5,13 @@
 	<servlet>
 		<servlet-name>dispatcher</servlet-name>
 		<servlet-class>com.ch.mvcframework.controller.DispatcherServlet</servlet-class>
+		<!-- 이 서블릿이 태어난 직후 호출되는 init() 생명주기 메서드에 전달할 매개변수와 값을 등록
+				그리고 이 파라미터 변수와 값은 init(ServletConfig config) 메서드의 매개변수로 정의된 ServletConfig로 전달
+		-->
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>WEB-INF/servlet-mapping.txt</param-value>
+		</init-param>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>dispatcher</servlet-name>

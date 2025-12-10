@@ -1,0 +1,19 @@
+# 자바의 컬렉션 프레임웍 객체중 Map을 상속받은 Properties라는 객체는 
+# 어떤 데이터가 =을 기준으로 key = value의 쌍으로 구성될 경우, 좌측은 key, 우측은 value로 해석이 가능함.
+# 요청이 들어오면 1:1 대응하는 값을 찾아서 처리하는 패턴 => 커맨드 패턴
+# 커맨드 패턴으로 요청이 들어오면 new로 계속 생성해주는 패턴 => 팩토리 패턴
+
+/movie.do=com.ch.mvcframework.controller.MovieController
+/food.do=com.ch.mvcframework.controller.FoodController
+
+# 게시판 컨트롤러 매핑
+/board/regist.do=com.ch.mvcframework.controller.RegistController
+/board/list.do=com.ch.mvcframework.controller.ListController
+/board/detail.do=com.ch.mvcframework.controller.DetailController
+
+# 게시판 뷰페이지 매핑
+# 자바 코드안에 뷰페이지명을 직접적으로 명시하게되면 외부 파일의 명칭이 달라질 경우, 자바 코드가 영향을 받게됨
+# 따라서 유지보수성을 위해서는 자바 클래스 안에 파일명을 직접 등록해서는 안됨(하드코딩 금지)
+/board/regist/result=/board/list.do
+/board/list/result=/board/list.jsp
+/board/detail/result=/board/detail.jsp

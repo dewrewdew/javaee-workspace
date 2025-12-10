@@ -21,10 +21,10 @@ import com.ch.mvcframework.food.model.FoodManager;
  * 모델2의 컨트롤러의 요건 위 1, 2번
  * 
  * */
-public class FoodController{
+public class FoodController implements Controller{
 	FoodManager manager = new FoodManager();
 	
-	protected void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 클라이언트의 요청 파라미터 받기
 		request.setCharacterEncoding("utf-8");
 		
