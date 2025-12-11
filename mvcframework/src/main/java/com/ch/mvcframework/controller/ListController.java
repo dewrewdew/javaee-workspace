@@ -31,7 +31,7 @@ public class ListController implements Controller{
 	public String getViewName() {
 		return "/board/list/result";
 	}
-	// jsp까지 살려서 가져갈 데이터가 있다면 묻지도 따지지도 말고 포워딩 해야한다.
+	// jsp까지 살려서 가져갈 데이터가 있다면 묻지도 따지지도 말고 포워딩 해야한다. 즉, 저장할 데이터가 있다면 포워딩해야된다고 판단하면 됨!! request객체 죽기전에 저장해야 하니까
 	public boolean isForward() {
 		return true;
 	}

@@ -35,6 +35,8 @@ public class RegistController implements Controller{
 		
 		// 등록 후 성공 시 게시물 목록을 보여줘야 함
 		// response.sendRedirect("/board/list.jsp");
+		// List list = boardDAO.selectAll(); => 월권!! regist역할만 하면되는데 리스트도 보여주려고함. 스마트폰 담당이 세탁기에도 손대야되는느낌. 주의!! 그래서 여기서는 포워딩이 아님!!
+		// 갱신된 목록을 보려면 무조건 do를 치고 들어와야함. 카운터와 주방 생각하기!!!
 	}
 	
 	// DispatcherServlet이 보여줘야 할 페이지 정보를 반환

@@ -39,4 +39,16 @@ public class FoodController implements Controller{
 		
 		
 	}
+
+	@Override
+	public String getViewName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isForward() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

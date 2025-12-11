@@ -27,10 +27,21 @@
 		select문에 의한 레코드 반환 수가 1건일때는 List가 반환되지 않는다.
 		대신 1건의 레코드를 담은 DTO가 반환됨
 	-->
-	<select id="select" parameterType="int">
+	<select id="select" parameterType="int" resultType="Board">
 		select board_id, title, writer, content, regdate, hit from board
 		where board_id=#{board_id}
 	</select>
+	
+	<!-- 1건 삭제 -->
+	<delete id="delete" parameterType="int">
+		delete from board where board_id=#{board_id}
+	</delete>
+	
+	<!-- 1건 수정 -->
+	<update id="update" parameterType="Board">
+		update board set title=#{title}, writer=#{writer}, content=#{content}
+		where board_id=#{board_id}
+	</update>
 
 
 </mapper>
