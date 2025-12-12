@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="../js/Box.js"></script><!--script 가져오고 나서 그 안에 코딩하면 안됨 오류남. 그러나 script태그로 구분해두기.서로 다른 script아님 결국 하나임!-->
+    <script>
+        /*
+        자바스크립트의 내장객체의 종류
+        1) String
+        2) Math
+        3) Array
+        4) Date
+        5) JSON
+        */
+
+    let currentDate; // 모든 함수에서 현재 유저가 머물러있는 날짜를 알게 하기 위해서 전역변수로 선언
+    let matrix=[];//7칸짜리 일차원배열을 모아놓을 바깥 배열
+    let dayArray=["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
+    /*-------------------------------------------------------------
+    [1] content div에 박스 출력
+    --------------------------------------------------------------*/
+       function createBox(){
+           // 요일 박스
+           for(let i = 0 ; i < dayArray.length ; i++){
+               let box = new Box(document.querySelector(".days"), i*100, 0, 100, 50, "pink", dayArray[i]);
+           }
+
+
+           // 날짜 박스 생성
+
+           for(let a = 0 ; a < 6; a++){ // 층 수
+            let boxList=[]; // 층 수 만큼 7칸짜리 일차원 배열이 필요함.
+            for(let i = 0 ; i < dayArray.length; i++){ // 호 수
+                let box = new Box(document.querySelector('.content'), i*100, a*100, 100, 100, "yellow", n);
+                boxList.push(box);
+            }
+               matrix.push(bosList);
+            }
+        }
+
+        function prev() {
+            // 현재 월에서 -1한 결과를 이용하여 clearNum(), printNum() 호출
+
+            // 공유된 날짜 객체의 월을 -1 처리한다.
+            currentDate.setMonth(currentDate.getMonth()-1);
+
+            // 화면에 출력
+            clearNum();
+        }
+        function prev() {
+            // 현재 월에서 -1한 결과를 이용하여 clearNum(), printNum() 호출
+
+            // 공유된 날짜 객체의 월을 -1 처리한다.
+            currentDate.setMonth(currentDate.getMonth()-1);
+
+            // 화면에 출력
+            clearNum();
+}
+        
+        $(()=>{
+            currentDate = new Date();
+
+            createBox();
+            setTitle();
+            clearNum();
+            // 최초 문서 로드시엔 현재 날짜를 넘겨야 함.
+            printNum(currentDate.getFullYear(), currentDate.getMonth());
+
+            // 이전 달 보기 버튼
+            $($(". header button")[0]).click(()=>{
+                prev();
+            });
+
+            // 다음 달 보기 버튼
+            $($(". header button")[1]).click(()=>{
+                next();
+            });
+        });
+        
+
+
+    /*-------------------------------------------------------------
+    [2] 해당 월의 시작 요일 구하기
+        1) 해당 월로 가자
+        2) 해당 월의 날짜를 1일로 조작하자
+    --------------------------------------------------------------*/
+    function getStartDay(yy, mm){
+        let d = new Date(yy, mm, 1); // 년, 월, 일을 생성자의 매개변수로 대입하면 더 편하다.
+        /* 생성자가 아닌 아래의 메서드로도 동일한 효과
+        d.setFullYear(yy);
+        d.setMonth(mm);
+        d.setDate(1);
+        */
+        return d.getDay(); // 조작한 객체로부터 요일을 구한다.
+    
+    }
+    
+    
+    /*-------------------------------------------------------------
+    [3] 해당 월의 총 일수(예) 12월은 31일까지임
+    1) 해당 월보다 1 큰(다음 달) 달로 이동(조작)
+    2) 조작된 월을 대상으로 0일로 또 조작(결국 0일은 이전달의 마지막날을 의미하게 되므로 원하는 결과 구할 수 있음)
+    --------------------------------------------------------------*/
+    function getTotalDate(yy, mm){
+        let d = new Date(yy, mm+1, 0);
+        return d.getDate(); // 조작된 날짜 객체에게 몇일인지 물어본다.
+    }
+    
+    
+    /*-------------------------------------------------------------
+    [4] 달력 셀에 실제 날짜 뿌리기
+    --------------------------------------------------------------*/
+    
+    function printNum(yy, mm) {
+        let n = 0; // 현재 박스의 순번을 알기위한 변수
+        let num = 1; // 실제 날짜를 출력하기 위한 변수
+        
+        for(let a = 0 ; a < 6 ; a++) {
+            for(let i = 0 ; i < 7 ; i++)  {
+                // 이미 존재하는 박스의 셀에 출력
+                if(n>=getStartDay(yy,mm) && num <= getTotalDate(yy,mm)){ // 순번용 변수인 n이 각 월의 시작요일에 도달할 때 부터
+                    // 예) 12월의 경우엔 0번째에는 참고, 1번에 도달했을때부터 찍어야 함.(12월은 월요일부터 시작하니까)
+                    matrix[a][i].setMsg(num); // Box 객체 안에 들어있는 div 사이에 글씨 넣기
+                    matrix[a][i].setDate(num);
+                    num++;
+                }
+                n++;
+            }
+        }
+    }
+    
+    /*-------------------------------------------------------------
+    [4-1] 기존 텍스트 지우기
+    --------------------------------------------------------------*/
+    function clearNum() {
+        for(let a = 0; a<matrix.length ; a++) {
+            for(let i = 0 ; i<matrix[a].length ; i++) {
+                matrix[a][i].setMsg(""); // 텍스트 초기화
+            }
+        }
+    }
+    /*-------------------------------------------------------------
+    [5] 달력의 날짜 제목 2025-12
+    --------------------------------------------------------------*/
+    function setTitle(){
+        // 일반 사용자들을 배려하여 월을 출력할때만 +1을 해서 출력한다.
+        $(".header span").html(currentDate.getFullYear+"년"+(currentDate.getMonth()+1) +"월");
+    }
+    
+    
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <button>이전</button>
+            <span>2025-12</span><!--속성이 inline인 아무 기능없는 태그! 다른 속성들과 나란히 놓여질 수 있음.-->
+            <button>다음</button>
+        </div>
+        <div class="days"></div>
+        <div class="content"></div>
+    </div>
+</body>
+</html>

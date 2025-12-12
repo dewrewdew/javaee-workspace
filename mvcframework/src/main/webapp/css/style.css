@@ -1,0 +1,27 @@
+        .container {
+            width: 700px;
+            height: 700px;
+            background-color: lightgrey;
+            margin : auto;
+        }
+        .header {
+            width: 100%;
+            height: 50px;
+            background-color: gray;
+            text-align: center;
+            line-height: 50px;
+        }
+        .days {
+            width: 100%;
+            height: 50px;
+            background-color: gainsboro;
+            position:relative; /*자식요소의 절대위치를 이 요소를 기준으로 잡기 위해서!*/
+            text-align: center;
+            line-height: 50px;
+        }
+        .content {
+            width: 100%;
+            height: 600px;
+            background-color: thistle;
+            position: relative; /*자식요소의 절대위치를 이 요소를 기준으로 잡기 위해서!*/
+        }
