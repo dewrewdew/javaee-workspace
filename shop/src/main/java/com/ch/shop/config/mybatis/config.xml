@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+		<typeAliases>
+			<typeAlias type="com.ch.shop.dto.Board" alias="Board"/>
+		</typeAliases>
+
+  <!-- 자바 코드 대신 쿼리문을 작성해놓은 파일을 가리켜 매퍼라 하며, 매퍼의 위치는 아래의 mappers 태그의 자식 태그로 등록해야함. -->
+  <mappers>
+    <mapper resource="com/ch/shop/config/mybatis/BoardMapper.xml"/>
+  </mappers>
+
+</configuration>
