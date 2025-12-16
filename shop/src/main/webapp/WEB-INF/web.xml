@@ -35,4 +35,5 @@
 		<servlet-name>dispatcher</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>	
+	<!-- /*보다 /가 더 범위가 넓어서 /사용!! -->
 </web-app>

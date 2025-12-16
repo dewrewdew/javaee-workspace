@@ -58,5 +58,27 @@
 	    <artifactId>spring-jdbc</artifactId>
 	    <version>4.3.30.RELEASE</version>
 	</dependency>
+	<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+	<!-- slf4j-api-->
+	<dependency>
+	    <groupId>org.slf4j</groupId>
+	    <artifactId>slf4j-api</artifactId>
+	    <version>1.7.36</version>
+	</dependency>
+	
+	<!--Logback은 slf4j 구현체-->
+	<!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
+	<dependency>
+	    <groupId>ch.qos.logback</groupId>
+	    <artifactId>logback-classic</artifactId>
+	    <version>1.2.13</version>
+	    <scope>compile</scope>
+	</dependency>
+	<!-- Spring4는 기본적으로 commons-logging을 쓰기 때문에 Logback을 쓸 경우 충돌 방지용 브릿지 설치를 권장-->
+	<dependency>
+	    <groupId>org.slf4j</groupId>
+	    <artifactId>jcl-over-slf4j</artifactId>
+	    <version>1.7.36</version>
+	</dependency>
   </dependencies>
 </project>

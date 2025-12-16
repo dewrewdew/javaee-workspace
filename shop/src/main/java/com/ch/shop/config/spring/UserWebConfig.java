@@ -7,6 +7,7 @@ import javax.sql.DataSource;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -15,10 +16,14 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jndi.JndiTemplate;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceView;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import com.ch.shop.controller.shop.BoardController;
+import com.ch.shop.model.board.MybatisBoardDAO;
 
 /*이 클래스는 로직을 작성하기 위함이 아니라, 애플리케이션에서 사용할 빈(객체)들 및 그들간의 관계(weaving)을 명시하기 위한 설정 목적의 클래스이며
  * 쇼핑몰의 일반 유저들이 보게되는 애플리케이션쪽 빈들을 관리한다.*/
@@ -32,8 +37,8 @@ import com.ch.shop.controller.shop.BoardController;
 // MVC에서의 DAO는 @Repository를 붙임
 // MVC에서의 DAO는 @Service를 붙임
 // MVC에서의 특정 분류가 딱히 없음에도 자동으로 올리고 싶다면 @Component
-@ComponentScan(basePackages="com.ch.shop.controller")
-public class UserWebConfig {
+@ComponentScan(basePackages={"com.ch.shop.controller","com.ch.shop.model"})
+public class UserWebConfig extends WebMvcConfigurerAdapter{
 	
 	// DispatcherServlet이 하위 컨트롤러로부터 반환받은 결과 페이지에 대한 정보는 사실 완전한 JSP경로가 아니므로
 	// 이를 해석할 수 있는 자인 ViewResolver에게 맡겨야 하는데,
@@ -75,8 +80,8 @@ public class UserWebConfig {
 	 * 그리고 이 모든 트랜잭션 매니저의 최상단 객체가 바로 PlatformTransactionManager다.
 	 *------------------------------------------------------------- */
 	@Bean
-	public PlatformTransactionManager transactionManager() {
-		return new DataSourceTransactionManager();
+	public PlatformTransactionManager transactionManager(SqlSessionFactory sqlSessionFactory) {
+		return new DataSourceTransactionManager(sqlSessionFactory.getConfiguration().getEnvironment().getDataSource());
 	}
 	/*-----------------------------------------------------------------
 	 * 3) SqlSession을 관리하는 mybatis의 SqlSessionFactory를 빈으로 등록
@@ -88,7 +93,30 @@ public class UserWebConfig {
 		SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
 		// 패키지에 포함된 파일의 유형이 클래스가 아닌 경우 더이상 패키지로 표현하지 말고 일반 디렉토리로 취급해야 한다. 그래서 . 대신 /으로 작성!
 		sqlSessionFactoryBean.setConfigLocation(new ClassPathResource("com/ch/shop/config/mybatis/config.xml"));
+		
+		sqlSessionFactoryBean.setDataSource(dataSource());
+		
 		return sqlSessionFactoryBean.getObject();
 	}
+	/*--------------------------------------------------------------
+	 4)SqlSessionTemplate @Bean으로 등록 <- SqlSessionFactoryBean 이 먼저 필요
+	 mybatis 사용 시 쿼리문 수행을 위해서는 SqlSession 을 이용했으나, mybatis-spring에서는 SqlSessionTemplate 객체를 사용해야 함 
+	---------------------------------------------------------------*/
+	@Bean
+	public SqlSessionTemplate sqlSessionTemplate() throws Exception{
+		return new SqlSessionTemplate(sqlSessionFactory());
+	}
+	
+	// 스프링 프레임웍을 지배하는 개발 원리 중 하나인 DI를 구현하려면 개발자는 사용할 객체들을 미리 빈으로 등록해야 한다.
+	// bean으로 등록해도 되지만 dao는 워낙 유명해서 해당 클래스에 @Repository를 명시하고  
+	// @ComponentScan(basePackages="com.ch.shop.controller") 의 형태로 이 파일에 기입하여 "해당 파일 하위에 있는 모든 클래스(클래스에 @표기가 되어있는것들은 전부 찾아)에 적용한다"는 뜻으로 기재하기!
+	
+	// DispatcherServlet은 컨트롤러에 대한 매핑만 수행하면 되며, 정적 자원(css, js,  html, image등)에 대해서는 직접 처리하지 않게 하기
+	// 여기서는 DispatcherServlet이 관여하지 않음
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/static/**").addResourceLocations("/resources/");
+	}
+	
+	
 
 }

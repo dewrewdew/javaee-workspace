@@ -18,7 +18,7 @@
   <script>
   	$(()=>{
   		$("button").click(()=>{
-  			location.href="/board/write.jsp";
+  			location.href="/board/registform";
   		});
   	});
   </script>
@@ -45,7 +45,7 @@
         		반드시 컨트롤러를 거쳐야만 모델에게 일을 시키고 그 결과를 컨트롤러가 저장해주므로 만일 jsp를 바로 호출하면 컨트롤러를 만나지 못하게되므로
         		데이터를 가져오지 못함(롯데리아에서 주문하고 주방으로 바로 뛰어들어가는 꼴)
          -->
-        	<a href="/board/detail.do?board_id=<%=board.getBoard_id()%>"><%=board.getTitle() %></a>
+        	<a href="/board/detail?board_id=<%=board.getBoard_id()%>"><%=board.getTitle() %></a>
        	</td>
         <td><%=board.getWriter() %>></td>
         <td><%=board.getRegdate() %>></td>

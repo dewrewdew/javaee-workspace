@@ -41,7 +41,7 @@ $(()=>{
 	
 	$("#bt_del").click(()=>{
 		if(confirm("삭제하시겠어요?")){
-			location.href="/board/delete.do?board_id=<%=board.getBoard_id()%>";	
+			location.href="/board/delete?board_id=<%=board.getBoard_id()%>";	
 		}
 			//delete from board where board_id=3; =>쿼리문을 먼저 판단해서 가져가야 할 파라미터가 있는지 판단!!
 	});
