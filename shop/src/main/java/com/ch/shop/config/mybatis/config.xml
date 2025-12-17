@@ -4,12 +4,16 @@
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 		<typeAliases>
-			<typeAlias type="com.ch.shop.dto.Board" alias="Board"/>
+			<typeAlias type="com.ch.shop.dto.Board" 			alias="Board"/>
+			<typeAlias type="com.ch.shop.dto.TopCategory" 	alias="TopCategory"/>
+			<typeAlias type="com.ch.shop.dto.SubCategory" 	alias="SubCategory"/>
 		</typeAliases>
 
   <!-- 자바 코드 대신 쿼리문을 작성해놓은 파일을 가리켜 매퍼라 하며, 매퍼의 위치는 아래의 mappers 태그의 자식 태그로 등록해야함. -->
   <mappers>
     <mapper resource="com/ch/shop/config/mybatis/BoardMapper.xml"/>
+    <mapper resource="com/ch/shop/config/mybatis/TopCategoryMapper.xml"/> <!-- 여기는 실제 존재하는 파일만 기재 가능. 파일 먼저 만들고 오기! -->
+    <mapper resource="com/ch/shop/config/mybatis/SubCategoryMapper.xml"/>
   </mappers>
 
 </configuration>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TopCategory">
+
+	<!-- 쇼핑몰의 모든 상위 카테고리 가져오기 -->
+	<select id="selectAll" resultType="TopCategory">
+		select topcategory_id, topname from topcategory
+	</select>
+</mapper>

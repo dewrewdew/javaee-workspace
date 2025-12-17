@@ -115,6 +115,7 @@ public class UserWebConfig extends WebMvcConfigurerAdapter{
 	// 여기서는 DispatcherServlet이 관여하지 않음
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/static/**").addResourceLocations("/resources/");
+		// 이렇게 안하면 자꾸 디스패쳐 서블릿이 이걸 낚아챌라함! 컨트롤러 처리할게아니라 그냥 접속자원임을 알려주기위해 웹상에서는 static으로 적으면 간섭하지말라는 뜻! 그냥 접속할거라는 뜻
 	}
 	
 	
