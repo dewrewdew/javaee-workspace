@@ -13,6 +13,5 @@
 		String msg=(String)request.getAttribute("msg");
 		out.print(msg);
 	%>
-
 </body>
 </html>

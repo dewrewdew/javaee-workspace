@@ -3,17 +3,34 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-		<typeAliases>
-			<typeAlias type="com.ch.shop.dto.Board" 			alias="Board"/>
-			<typeAlias type="com.ch.shop.dto.TopCategory" 	alias="TopCategory"/>
-			<typeAlias type="com.ch.shop.dto.SubCategory" 	alias="SubCategory"/>
-		</typeAliases>
-
-  <!-- 자바 코드 대신 쿼리문을 작성해놓은 파일을 가리켜 매퍼라 하며, 매퍼의 위치는 아래의 mappers 태그의 자식 태그로 등록해야함. -->
+	<typeAliases>
+		<typeAlias type="com.ch.shop.dto.Board" 					alias="Board"/>
+		<typeAlias type="com.ch.shop.dto.TopCategory" 		alias="TopCategory"/>
+		<typeAlias type="com.ch.shop.dto.SubCategory" 		alias="SubCategory"/>
+		<typeAlias type="com.ch.shop.dto.Color" 					alias="Color"/>
+		<typeAlias type="com.ch.shop.dto.Size" 					alias="Size"/>
+		<typeAlias type="com.ch.shop.dto.Product" 				alias="Product"/>
+		<typeAlias type="com.ch.shop.dto.ProductColor" 		alias="ProductColor"/>
+		<typeAlias type="com.ch.shop.dto.ProductSize" 			alias="ProductSize"/>
+		<typeAlias type="com.ch.shop.dto.ProductImg" 			alias="ProductImg"/>
+	</typeAliases>
+  
+  <!-- 자바 코드 대신, 쿼리문을 작성해놓은 파일을 가리켜 매퍼라 하며, 매퍼의 위치는 아래의 mappers 태그의 자식 태그로 등록해야 함  -->
   <mappers>
     <mapper resource="com/ch/shop/config/mybatis/BoardMapper.xml"/>
-    <mapper resource="com/ch/shop/config/mybatis/TopCategoryMapper.xml"/> <!-- 여기는 실제 존재하는 파일만 기재 가능. 파일 먼저 만들고 오기! -->
+    <mapper resource="com/ch/shop/config/mybatis/TopCategoryMapper.xml"/>
     <mapper resource="com/ch/shop/config/mybatis/SubCategoryMapper.xml"/>
+    <mapper resource="com/ch/shop/config/mybatis/ColorMapper.xml"/>
+    <mapper resource="com/ch/shop/config/mybatis/SizeMapper.xml"/>
+    <mapper resource="com/ch/shop/config/mybatis/ProductMapper.xml"/>
+    <mapper resource="com/ch/shop/config/mybatis/ProductColorMapper.xml"/>
+    <mapper resource="com/ch/shop/config/mybatis/ProductSizeMapper.xml"/>
+    <mapper resource="com/ch/shop/config/mybatis/ProductImgMapper.xml"/>
   </mappers>
-
+ 
 </configuration>
+
+
+
+
+

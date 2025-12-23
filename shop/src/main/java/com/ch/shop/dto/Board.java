@@ -10,5 +10,4 @@ public class Board {
 	private String content;
 	private String regdate;
 	private int hit;
-	
 }

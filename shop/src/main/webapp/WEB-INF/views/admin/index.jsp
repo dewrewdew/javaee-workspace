@@ -6,19 +6,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AdminLTE 3 | Dashboard</title>
 
-	<%@ include file="./inc/head_link.jsp" %><!-- /admin/이런식으로 접근하게되면 디스패쳐 서블릿이 가로채버림!! 따라서 절대경로가 아닌 상대경로로 접근해야 함 -->
+	<%@ include file="./inc/head_link.jsp" %>  
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
   <!-- Preloader -->
-<%@ include file="./inc/preloader.jsp" %>
+	<%@ include file="./inc/preloader.jsp" %>
 
   <!-- Navbar -->
- <%@ include file="./inc/navbar.jsp" %>
- 
+	<%@ include file="./inc/navbar.jsp" %>	
+  <!-- /.navbar -->
+
   <!-- Main Sidebar Container -->
- <%@ include file="./inc/sidebar.jsp" %>
+	<%@ include file="./inc/sidebar.jsp" %>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -626,14 +627,13 @@
   </div>
   <!-- /.content-wrapper -->
 	<%@ include file="./inc/footer.jsp" %>
-
+	
   <!-- Control Sidebar -->
-	<%@ include file="./inc/control_sidebar.jsp" %>
+	<%@ include file="./inc/control_sidebar.jsp" %>  
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
-
-<!-- jQuery -->
 	<%@ include file="./inc/footer_link.jsp" %>
+	
 </body>
 </html>

@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<!-- jQuery -->
 <script src="/static/adminlte/plugins/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="/static/adminlte/plugins/jquery-ui/jquery-ui.min.js"></script>

@@ -1,33 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Board">
-
-	<insert id="insert" parameterType="board">
-		insert into board(title, writer, content) values (#{title}, #{writer}, #{content})
+	<insert id="insert" parameterType="Board">
+		insert into board(title, writer, content) values(#{title}, #{writer}, #{content})
 	</insert>
 	
-	<!-- 쿼리문의 일부를 별도로 정의해놓고 재사용하기 위함 -->
+	<!-- 쿼리문의 일부를 별도로 정의해놓고 재사용하기 위함.. -->
 	<sql id="sql_select">
-		select board_id, title, writer, content, regdate, hit from board
+		select board_id, title, writer, content, regdate, hit  from board
 	</sql>
 	
 	<select id="selectAll" resultType="Board">
-		<include refid="sql_select"/> order by board_id desc
+		<include refid="sql_select"/> order by board_id desc	
 	</select>
 	
 	<select id="select" resultType="Board" parameterType="int">
-		<include refid="sql_select"/>where board_id=#{board_id}
+		<include refid="sql_select"/> where board_id=#{board_id}
 	</select>
 	
 	<update id="update" parameterType="Board">
 		update board set title=#{title}, writer=#{writer}, content=#{content}
 		where board_id=#{board_id}
-	</update>
+	</update>	
 	
 	<delete id="delete" parameterType="int">
-		delete from borad where board_id=#{board_id}
+		delete from borad where board_id=#{board_id} 
 	</delete>
 	
-	
-
 </mapper>
+
+
+
+
+
+
+
+
+
+
+

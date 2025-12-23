@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Color">
+	
+	<!-- 모든 색상 가져오기  -->
+	<select id="selectAll" resultType="Color">
+		select color_id, color_name from color
+	</select>
+	
+</mapper>
