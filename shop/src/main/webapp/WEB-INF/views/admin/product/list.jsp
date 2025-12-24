@@ -1,6 +1,11 @@
+<%@page import="com.ch.shop.dto.ProductImg"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page import="java.util.List" %>
 <%@ page import="com.ch.shop.dto.TopCategory" %>
+<%@ page import="com.ch.shop.dto.Product"%>
+<%
+	List<Product> productList=(List)request.getAttribute("productList");
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,6 +54,7 @@
         <!-- 메인 컨텐츠 시작 -->
         <div class="row">
         	<div class="col-md-12">
+				
 				<!-- 상품 목록 시작 -->
 				<div class="card">
 	              <div class="card-header">
@@ -71,42 +77,35 @@
 	                <table class="table table-hover text-nowrap">
 	                  <thead>
 	                    <tr>
-	                      <th>ID</th>
-	                      <th>User</th>
-	                      <th>Date</th>
-	                      <th>Status</th>
-	                      <th>Reason</th>
+	                      <th>No</th>
+	                      <th>이미지</th>
+	                      <th>하위카테고리</th>
+	                      <th>상품명</th>
+	                      <th>브랜드</th>
+	                      <th>가격</th>
+	                      <th>할인가</th>
 	                    </tr>
 	                  </thead>
 	                  <tbody>
+	                  	
+	                  	<%for(int i=0;i<productList.size();i++){%>
+	                  	<%Product product = productList.get(i); %>
 	                    <tr>
-	                      <td>183</td>
-	                      <td>John Doe</td>
-	                      <td>11-7-2014</td>
-	                      <td><span class="tag tag-success">Approved</span></td>
-	                      <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-	                    </tr>
-	                    <tr>
-	                      <td>219</td>
-	                      <td>Alexander Pierce</td>
-	                      <td>11-7-2014</td>
-	                      <td><span class="tag tag-warning">Pending</span></td>
-	                      <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-	                    </tr>
-	                    <tr>
-	                      <td>657</td>
-	                      <td>Bob Doe</td>
-	                      <td>11-7-2014</td>
-	                      <td><span class="tag tag-primary">Approved</span></td>
-	                      <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-	                    </tr>
-	                    <tr>
-	                      <td>175</td>
-	                      <td>Mike Doe</td>
-	                      <td>11-7-2014</td>
-	                      <td><span class="tag tag-danger">Denied</span></td>
-	                      <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-	                    </tr>
+	                      <td>1</td>
+	                      <%
+	                      	ProductImg productImg=product.getProductImgList().get(0);
+	                      %>
+	                      <td><%//="c:/shopdata/product/p"+product.getProduct_id()+"/"+productImg.getFilename()%></td>
+	                      <td>
+	                      	<img src="/photo/p<%=product.getProduct_id()%>/<%=productImg.getFilename()%>" width="30px">
+                      	  </td>
+	                      <td><%=product.getSubCategory().getSubname() %></td>
+	                      <td><%=product.getProduct_name() %></td>
+	                      <td><%=product.getBrand() %></td>
+	                      <td><%=product.getPrice() %></td>
+	                      <td><%=product.getDiscount() %></td>
+	                    </tr>	              
+						<%}%>
 	                  </tbody>
 	                </table>
 	              </div>
@@ -142,23 +141,8 @@
 		}
 		
 		$(()=>{
-			getList();			
+			//getList();			
 		});
 	</script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -132,7 +132,9 @@ public class ProductController {
 	
 	//상품 목록 페이지 요청 처리 
 	@GetMapping("/product/list")
-	public String getListPage() {
+	public String getListPage(Model model) {
+		List productList=productService.getList(); // 3단계 일시키기
+		model.addAttribute("productList", productList);
 		return "admin/product/list";
 	}
 	

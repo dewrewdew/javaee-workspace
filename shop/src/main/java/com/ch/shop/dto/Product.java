@@ -1,5 +1,6 @@
 package com.ch.shop.dto;
 
+import java.awt.peer.ListPeer;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -16,6 +17,7 @@ public class Product {
 	private int discount;
 	private List<Color> colorList;//색상
 	private List<Size> sizeList;//사이즈
+	private List<ProductImg> productImgList;
 	private String introduce;
 	private String detail;
 	private SubCategory subCategory;//하위카테고리

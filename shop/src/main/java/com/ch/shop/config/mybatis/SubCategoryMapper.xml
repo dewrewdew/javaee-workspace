@@ -8,4 +8,9 @@
 		where topcategory_id=#{topcategory_id} 
 	</select>
 	
+	<!-- pk값으로 레코드 한 건 가져오기 -->
+	<select id="select" parameterType="int" resultType="SubCategory">
+		select * from subcategory where subcategory_id=#{subcategory_id}
+	</select>
+	
 </mapper>

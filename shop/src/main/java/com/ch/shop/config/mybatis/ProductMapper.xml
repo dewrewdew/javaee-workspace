@@ -16,11 +16,40 @@
 		</selectKey>
 	</insert>
 	
+	<!-- mybatis에 의해 DTO와 컬럼명이 일치하지 않을 경우 자동으로 매핑해주지 않음
+	ex) subcategory_id vs subCategory(객체)
+	=> 따라서 이 시점부터는 개발자가 나서서 수동으로 매핑을 시도할 수 있다.
+	단, 자동매핑은 포기하는거라 할라면 전체를 다 수동으로 직접해야 함 (객체의 속성 : property)-->
+	<resultMap id="productMap" type="Product">
+		<id column="product_id" 			property="product_id" />
+		<result column="product_name" 	property="product_name"/>
+		<result column="brand" 				property="brand"/>
+		<result column="price" 				property="price"/>
+		<result column="discount" 			property="discount"/>
+		<result column="introduce" 		property="introduce"/>
+		<result column="detail" 				property="detail"/>
+		
+		<!-- 다른 테이블의 레코드 1건을 가져오기
+		association이란? 부모의 레코드를 가져오는 기능을 말하며 자식과 부모관계인 1:1관계에서 사용됨.
+		mybatis에서 join문 쓰면 너무 손해! 객체 관계를 이용해서 이렇게 사용하기!
+		collection이란? 자식의 레코드를 여러개 가져올때 사용! 여러건의 자식 레코드를 가져올 수 있는 mybatis의 기능
+		
+		subcategory_id를 들고 1:1 대응시키러 찾아 나설거야! 그리고 객체를 찾아서 property에 넣어줄거야!의 의미!
+		-->
+		<association column="subcategory_id" property="subCategory" javaType="SubCategory"	select="SubCategory.select"/>
+		<collection column="product_id" 
+			select="ProductImg.selectByProductId"
+			property="productImgList"
+			javaType="java.util.List"
+			ofType="ProductImg"
+		/>
+	</resultMap>
+	
 	
 	<!-- 모든 상품 가져오기  -->
-	<select id="selectAll" resultType="Product">
+	<select id="selectAll" resultMap="productMap">
 		select product_id, product_name, brand, price, discount, introduce, detail, subcategory_id
-		from product			
+		from product
 	</select>
 
 
